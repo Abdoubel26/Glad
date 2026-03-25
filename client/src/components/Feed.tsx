@@ -2,14 +2,15 @@ import { posts } from "../assets/assets"
 
 function Feed() {
   return (
-    <div className='p-4 w-screen flex flex-col max-w-screen overflow-clip'>
-       <div className=' border-b-2 w-fit'><h1 className=' text-4xl outfit p-1  font-bold'>Latest Good News</h1></div>
+    <div className='p-4 justify-center items-center w-screen flex flex-col max-w-screen overflow-clip'>
+       <div className=' w-full'><h1 className=' text-4xl border-b-2 w-fit outfit p-1 self-start  font-bold'>Latest Good News</h1></div>
 
-        <div className=" lg:grid lg:grid-cols-3 lg:gap-10 lg:gap-y-5 p-3">
+        <div className=" lg:grid lg:grid-cols-3 max-w-screen w-screen lg:gap-10 lg:gap-y-5 p-3">
         {posts.map((post, indx) => (
-            <div key={indx} className=" bg-blue-800 rounded-2xl p-3 cursor-pointer">
-                <img src={post.image}  className="h-50 object-cover w-full rounded-2xl"/>
-               <h1 className="text-white poppins font-medium p-3 cursor-pointer">{post.title}</h1> 
+            <div key={indx} className=" bg-blue-800 rounded-2xl p-3 pb-1 cursor-pointer hover:scale-103 transition-all duration-200">
+                <img src={post.title}  className="h-50 object-cover w-full rounded-2xl cursor-pointer"/>
+               <h1 className="text-white poppins font-medium pt-3 pb-1 cursor-pointer">{post.title}</h1> 
+               <h2 className="text-gray-200 p-1 font-light">{post.subtitle}</h2>
             </div>
         ))
 

@@ -15,3 +15,17 @@
 .crete {
   font-family: 'Crete';
 }
+
+body, html #root {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: rgb(176, 176, 110);
+  overflow-x: hidden;
+}
+
+*{
+  scrollbar-width: none;
+}
