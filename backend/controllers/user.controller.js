@@ -1,4 +1,4 @@
-import users from '../models/userModel.js'
+import User from '../models/user.model.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
@@ -10,10 +10,10 @@ export const signup = async (req, res) => {
     const {name, email, password} = req.body
     if(!name || !email || !password) return res.status(400).json({ success: false, message: "Missing required fields"});
     try {
-        const foundUser = await users.findOne({email: email})
+        const foundUser = await User.findOne({email: email})
         if(foundUser) return res.status(400).json({ success: false, message: "email already registered"});
         const hash = await bcrypt.hash(password, 10)
-        const newUser = new users({name: name, email: email, password: hash})
+        const newUser = new User({name: name, email: email, password: hash})
         await newUser.save()
         const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET, {expiresIn: "2d"} )
         const {password: _, ...safeUser} = newUser.toObject()
@@ -27,7 +27,7 @@ export const login = async (req, res) => {
     const {email, password} = req.body
     if(!email || !password) return res.status(400).json({ success:true, message:"Missing required fields"});
     try {
-        const foundUser = await users.find({email: email})
+        const foundUser = await User.find({email: email})
         if(!foundUser) return res.status(404).json({ success: false, message: "Email not registered"});
         const isMatch = bcrypt.compare(password, foundUser.password)
         if(!isMatch) return res.status(401).json({ success: false, message: "wrong email or password"});
