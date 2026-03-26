@@ -1,6 +1,24 @@
-import { posts } from "../assets/assets"
+import { useState, useEffect } from "react"
+import { getPosts } from "../lib/services"
+import type { postType } from "../lib/types"
+
 
 function Feed({text}: {text: string}) {
+
+  const [posts, setPosts] = useState<postType[]>([])
+
+  useEffect(() => {
+    const loadPosts = async () => {
+    const response = await getPosts()
+    if(response.success) {
+      setPosts(response.posts)
+    } else {
+      alert(response.message)
+    }
+    }
+    loadPosts()
+  }, [])
+
   return (
     <div className='p-4 justify-center items-center w-screen flex flex-col max-w-screen overflow-clip'>
        <div className=' w-full'><h1 className=' text-4xl border-b-2 w-fit outfit p-1 self-start  font-bold'>{text}</h1></div>

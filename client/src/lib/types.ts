@@ -7,3 +7,11 @@ export interface postType {
     createdAt: string,
     category: string
 }
+
+
+export interface userType {
+    id?: string, 
+    name: string, 
+    email: string,
+    password?: string
+}

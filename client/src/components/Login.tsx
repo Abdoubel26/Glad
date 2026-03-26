@@ -1,14 +1,37 @@
-import React from 'react'
 import { useState } from 'react'
+import { login, signup } from '../lib/services'
+import { useAuth } from '../context/thisUserContext'
 
 type currStateType = 'Sign up' | 'Log in'
 
 function Login() {
+  const { setAuth } = useAuth()
 
     const [inputName, setInputName] = useState('')
     const [inputEmail, setInputEmail] = useState('')
     const [inputPassword, setInputPassword] = useState('')
     const [currState, setCurrState] = useState<currStateType>('Sign up')
+
+
+    const handleSubmit =  async () => {
+      if(currState === "Log in"){
+        const response = await login(inputEmail, inputPassword)
+        if(response.success) {
+          setAuth(response.token, response.user)
+        } else {
+          alert(response.message)
+        }
+
+      } 
+      else {
+        const response = await signup({name: inputName, email: inputEmail, password: inputPassword})
+        if(response.success) {
+          setAuth(response.token, response.user)
+        } else {
+          alert(response.message)
+        }
+      }
+    }
 
   return (
     <div className='flex flex-row justify-center h-screen items-center'>
@@ -22,6 +45,7 @@ function Login() {
           <div className='flex flex-col items-center w-full px-10 py-5 h-full justify-center'>
             <form onSubmit={(e) => {
               e.preventDefault()
+              handleSubmit()
               }}  className='flex gap-y-4 flex-col bg-gray-200 h-fit rounded-sm transition-all duration-200 00 w-full px-20 items-center p-10'>
               <div className='flex flex-row items-center cursor-default'>
                 <h1  className='bungee text-4xl'>Glad</h1> 
