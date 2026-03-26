@@ -1,9 +1,9 @@
 import { posts } from "../assets/assets"
 
-function Feed() {
+function Feed({text}: {text: string}) {
   return (
     <div className='p-4 justify-center items-center w-screen flex flex-col max-w-screen overflow-clip'>
-       <div className=' w-full'><h1 className=' text-4xl border-b-2 w-fit outfit p-1 self-start  font-bold'>Latest Good News</h1></div>
+       <div className=' w-full'><h1 className=' text-4xl border-b-2 w-fit outfit p-1 self-start  font-bold'>{text}</h1></div>
 
         <div className=" lg:grid lg:grid-cols-3 max-w-screen w-screen lg:gap-10 lg:gap-y-5 p-3">
         {posts.map((post, indx) => (
