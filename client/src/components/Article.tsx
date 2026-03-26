@@ -1,17 +1,37 @@
-import React from 'react'
-import { type postType } from '../lib/types'
 import ReactMarkdown from 'react-markdown'
 import Feed from './Feed'
+import { useEffect, useState } from 'react'
+import type { postType } from '../lib/types'
+import { useParams, useNavigate } from 'react-router-dom'
+import { usePosts } from '../context/postsContext'
 
-type propTypes = {
-    post: postType
-}
+function Article() {
+  const navigate = useNavigate()
+  const { posts } = usePosts()
+  const { id } = useParams<{id: string}>()
 
-function Article({ post }: propTypes) {
+  useEffect(() => {
+    const foundpost = posts.find(p => p._id === id)
+    console.log(foundpost, posts, id)
+    if(foundpost) setPost(foundpost)
+  }, [])
+
+  const [post, setPost] = useState<postType>({
+    title: "",
+    subtitle: "",
+    image: "",
+    _id: "",
+    content: "",
+    category: "",
+    createdAt: "",
+  })
+
+
+
   return (
     <>
     <div className='flex flex-col p-7 px-20 items-center justify-center'>
-    <div className='w-full flex flex-row items-center justify-between'> <h1 className='poppins text-4xl text-left font-medium border-b-2  w-fit'>{post.title}</h1> <span className='text-black outfit font-semibold border transition-all border-black px-3 py-2 cursor-pointer hover:bg-[#939352] rounded-2xl text-lg' >X</span></div>
+    <div className='w-full flex flex-row items-center justify-between'> <h1 className='poppins text-4xl text-left font-medium border-b-2  w-fit'>{post.title}</h1> <span onClick={() => navigate('/')} className='text-black outfit font-semibold border transition-all border-black px-3 py-2 cursor-pointer hover:bg-[#939352] rounded-2xl text-lg' >X</span></div>
     <div className='w-full'><h2 className='poppins text-left text-3xl font-medium mt-5 pt-3'>{post.subtitle}</h2></div>  
 
         <div className='mt-10'><img src={post.image} className='w-190 h-110 object-cover' /></div>

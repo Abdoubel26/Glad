@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { getPosts } from "../lib/services"
-import type { postType } from "../lib/types"
-
+import { useNavigate } from "react-router-dom"
+import { usePosts } from "../context/postsContext"
 
 function Feed({text}: {text: string}) {
 
-  const [posts, setPosts] = useState<postType[]>([])
+  const { posts, setPosts} = usePosts()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -25,10 +26,10 @@ function Feed({text}: {text: string}) {
 
         <div className=" lg:grid lg:grid-cols-3 max-w-screen w-screen lg:gap-10 lg:gap-y-5 p-3">
         {posts.map((post, indx) => (
-            <div key={indx} className=" bg-blue-800 rounded-2xl p-3 pb-1 cursor-pointer hover:scale-103 transition-all duration-200">
-                <img src={post.title}  className="h-50 object-cover w-full rounded-2xl cursor-pointer"/>
+            <div key={indx} onClick={() => navigate(`/article/${post._id}`)} className=" bg-blue-800 rounded-2xl p-3 pb-1 cursor-pointer hover:scale-103 transition-all duration-200">
+                <img src={post.image}  className="h-50 object-cover w-full rounded-2xl cursor-pointer"/>
                <h1 className="text-white poppins font-medium pt-3 pb-1 cursor-pointer">{post.title}</h1> 
-               <h2 className="text-gray-200 p-1 font-light">{post.subtitle}</h2>
+               <h2 className="text-gray-200 p-1 font-light">{post.subtitle} <span className="text-white underline hover:text-blue-300 transition-all font-semibold">Read more...</span></h2>
             </div>
         ))
 

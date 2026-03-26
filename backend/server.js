@@ -1,10 +1,15 @@
 import express from 'express'
 import connectDB from './config/db.js';
+import cors from 'cors'
 import userRouter from './routes/user.route.js'
 import postRouter from './routes/post.route.js'
 
 const app = express();
 
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"]
+}))
 app.use(express.json())
 
 

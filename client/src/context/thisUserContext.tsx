@@ -1,4 +1,4 @@
-import { useContext, createContext, type FC, type ReactNode, useState } from "react";
+import { useContext, createContext, type FC, type ReactNode, useState, useEffect } from "react";
 import type { userType } from "../lib/types";
 
 interface thisUserContextType {
@@ -26,6 +26,12 @@ export const ThisUserContextProvider: FC<{children: ReactNode}> = ({children}) =
 
     const [token, setToken] = useState<string>('')
     const [thisUser, setThisUser] = useState<userType>(initState.thisUser)
+
+    
+    useEffect( () => {
+    const TOKEN = localStorage.getItem('token')
+    if(TOKEN) setToken(TOKEN)
+    }, [])
 
     const setAuth = (token: string, user: userType) => {
         setToken(token)
