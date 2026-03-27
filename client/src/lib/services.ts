@@ -4,7 +4,7 @@ const url = "http://localhost:5000/api"
 
 
 export const signup = async (user: userType) => {
-    const res = await fetch(`${url}/users/signup`, {
+    const res = await fetch(`${url}/user/signup`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(user)
@@ -13,7 +13,7 @@ export const signup = async (user: userType) => {
 }
 
 export const login = async (email:string, password:string) => {
-    const res = await fetch(`${url}/users/login`, {
+    const res = await fetch(`${url}/user/login`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({email, password})
@@ -22,7 +22,7 @@ export const login = async (email:string, password:string) => {
 }
 
 export const getPosts = async () => {
-    const res = await fetch(`${url}/posts/all`, {
+    const res = await fetch(`${url}/post/all`, {
         method: 'GET',
         headers: {"Content-Type": "application/json"}
     })

@@ -1,14 +1,24 @@
 import Like from '../models/like.model.js'
 
 
+export const getLikes = async (req, res) => {
+    try {
+        const likes = await Like.find()
+        return res.status(200).json({ success: true, message: "likes fetched", likes: likes})
+    } catch(err) {
+        return res.status(500).json({ success: false, message: `Internal Server Error: ${err.message}`})
+    }
+}
 
 export const toggleLike =  async (req, res) => {
-    const { postId, } = req.body
-    const { id } = req.id
-    if(!id || !postId) return res.status(400).json({ success: false, message:"Missing user ID or post ID"});
+    const { postId } = req.body
+    const { id } = req.userId
+    console.log(id)
+    if(!postId) return res.status(400).json({ success: false, message:"Missing post ID"});
+    if(!id) return res.status(400).json({ success: false, message:"Missing user ID"});
     try{
         const foundlike = await Like.findOne({user: id, post: postId})
-        if(:foundlike){
+        if(foundlike){
             await Like.findOneAndDelete({user: id, post: postId})
             return res.status(200).json({ success:true, message: "like removed" })
         } else {
@@ -23,7 +33,7 @@ export const toggleLike =  async (req, res) => {
 
 // export const toggleSave = async (req, res) => {
 //     const { postId} = req.body
-//     const { id } = req.id
+//     const { id } = req.userId
 //     if(!id || !postId) return res.status(400).json({ success: false, message:"Missing user ID or post ID"});
 //     try {
 //         const foundsave = await Like.findOne({user: id, post: postId, save: true})
