@@ -24,7 +24,8 @@ export const toggleSave = async (req, res) => {
         } else {
             const newSave = new Save({user: id, post: postId})
             await newSave.save()
-            return res.status(200).json({ success: true, message:"Save added"})
+            console.log(newSave)
+            return res.status(200).json({ success: true, message:"Save added", save: newSave})
         }
     } 
     catch(e) {
