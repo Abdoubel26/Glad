@@ -41,9 +41,12 @@ function Feed({text}: {text: string}) {
     if(response.success){
       const foundSave = saves.find(save => save.post === postId && save.user === thisUser.id )
       if(foundSave){
+        console.log('foundsave:', foundSave)
         setSaves(prev => prev.filter(save => save._id !== foundSave._id))
       } else {
+        console.log('response save:', response.save)
         setSaves(prev => [...prev, response.save])
+        console.log(` saves after set saves probably didn't change ${saves}`)
       }
     }
     else {
@@ -65,11 +68,13 @@ function Feed({text}: {text: string}) {
                <div onClick={() =>{
                const func = async () => {
                 await clickSave(post._id)
+                console.log(`tthe saves that have the same postid with this post   ${saves.find(save => save.post === post._id)}`)
+                console.log(` the entire saves during func after await clickSave ${saves}`)
                } 
-               func()
+               func() 
               }}
               className="w-full flex justify-end">
-                 { saves.length !== 0 && saves.some(save => save.post === post._id) ?
+                 { saves.length !== 0 && saves.some(save => save.post === post._id && save.user === thisUser.id) === undefined ?
                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M713-600 600-713l56-57 57 57 141-142 57 57-198 198ZM200-120v-640q0-33 23.5-56.5T280-840h240v80H280v518l200-86 200 86v-278h80v400L480-240 200-120Zm80-640h240-240Z"/></svg>
                   :
                   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Zm80-122 200-86 200 86v-518H280v518Zm0-518h400-400Z"/></svg>
@@ -77,11 +82,8 @@ function Feed({text}: {text: string}) {
                </div>
             </div>
         ))
-
         }
-        </div> 
-
-
+        </div> n
     </div>
   )
 }
